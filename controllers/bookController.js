@@ -26,12 +26,25 @@ bookController.getAllBooks = async (req, res) => {
 // Retrieve a single book by ID
 bookController.getBookById = async (req, res) => {
     try {
-        const book = await Book.find({"bookID":req.params.id});
+        const book = await Book.find({"title":req.params.id});
         if (!book) {
             res.status(404).send("Book not found");
             return;
         }
-        res.send(book);
+        res.send(book[0]);
+    } catch (error) {
+        res.status(500).send("Error fetching book: " + error.message);
+    }
+};
+
+bookController.getBookByAuthor = async (req, res) => {
+    try {
+        const book = await Book.find({"authors":req.params.id});
+        if (!book) {
+            res.status(404).send("Book not found");
+            return;
+        }
+        res.send(book[0]);
     } catch (error) {
         res.status(500).send("Error fetching book: " + error.message);
     }

@@ -13,18 +13,18 @@ export const importBooks = async (req, res) => {
       const response = await axios.get(API_URL, { params });
       console.log(response.data.message);
       const booksData = response.data.message;
-  
+      let noofbooks = req.body.noofbooks;
       // Insert all the fetched books into MongoDB
-      booksData.forEach(book => {
+      for(let i=0;i<noofbooks;i++){
         try{
-            book.stock=10;
-            book.price=Math.round(2500 - Math.random()*1000);
-            const oneBook = new Book(book);
+            booksData[i].stock=10;
+            booksData[i].price=Math.round(2500 - Math.random()*1000);
+            const oneBook = new Book(booksData[i]);
             oneBook.save();
          }catch(error){
              res.status(410).send("Error while saving");
          } 
-      });
+      }
   
       res.send("Books imported successfully!");
     } catch (error) {

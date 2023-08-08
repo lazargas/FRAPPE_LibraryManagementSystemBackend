@@ -14,6 +14,7 @@ route.get('/books/:id', bookController.getBookById);
 route.put('/books/:id', bookController.updateBook);
 route.delete('/books/:id', bookController.deleteBook);
 route.delete('/books', bookController.deleteAllBook);
+route.get('/books/authors/:id',bookController.getBookByAuthor);
 
 
 // Member Routes
